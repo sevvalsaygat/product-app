@@ -1,12 +1,33 @@
-export default function Product() {
+import { ProductType } from '@types';
+import { useDeleteProductById } from '@hooks';
+import { useRouter } from 'next/router';
+
+type ProductProps = {
+  product: ProductType;
+};
+
+export default function Product({ product }: ProductProps) {
+  const router = useRouter();
+
+  const { mutate } = useDeleteProductById({
+    onSuccess: () => {
+      router.reload();
+    },
+  });
+
   return (
     <tr>
-      <td>Okula gidilecek.</td>
-      <td>Saat 08.00 da</td>
-      <td>completed</td>
+      <td>{product.product}</td>
+      <td>{product.price}</td>
+      <td>{product.stockQuantity}</td>
       <td>
-        <button>Düzenle</button>
-        <button>Sil</button>
+        <button
+          onClick={() => {
+            mutate(product.id);
+          }}
+        >
+          Sil
+        </button>
       </td>
     </tr>
   );
