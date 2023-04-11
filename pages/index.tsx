@@ -29,7 +29,6 @@ export default function Home() {
               data.map((product: ProductType) => (
                 <Product product={product} key={product.id} />
               ))}
-            <Product />
           </tbody>
         </table>
       </div>
